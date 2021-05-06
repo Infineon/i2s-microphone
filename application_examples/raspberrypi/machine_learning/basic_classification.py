@@ -5,19 +5,22 @@ from scipy import signal
 from scipy import fft
 import pickle
 import pandas as pd
+from sklearn import preprocessing # Preprocessing module to normalize X data
 from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score as accuracy
+from sklearn.model_selection import cross_val_score
+import librosa
 
 # These values can be adapted according to your requirements.
 samplerate = 48000
-downsample = 1
+downsample = 2
+dsr = int(samplerate/downsample)
 input_gain_db = 12
 device = 'snd_rpi_i2s_card'
 classes = ['clap', 'snip', 'other']
-samples_per_class = 30
+samples_per_class = 50
 sample_duration = 1
-features_per_sample = 1000
 output_folder = "wav_output"
 
 init_time = 5
@@ -58,8 +61,8 @@ def process_audio_data(audiodata):
     # High-pass filter the data at a cutoff frequency of 10Hz.
     # This is required because I2S microhones have a certain DC offset
     # which we need to filter in order to amplify the volume later.
-    ch1 = butter_highpass_filter(ch1, 10, samplerate)
-    ch2 = butter_highpass_filter(ch2, 10, samplerate)
+    ch1 = butter_highpass_filter(ch1, 10, dsr)
+    ch2 = butter_highpass_filter(ch2, 10, dsr)
 
     # Amplify audio data.
     # Recommended, because the default input volume is very low.
@@ -103,7 +106,7 @@ def record_samples():
 def save_samples(recording):
     global init_time, prepare_time, gap_time
     # Generate samples from audio recording and save them.
-    s = int(samplerate/downsample)
+    s = dsr
     start_offset = init_time * s
     
     samples = {}
@@ -120,28 +123,29 @@ def save_samples(recording):
 def save_samples_as_wav(samples):
     for cls in samples:
         for i,sample in enumerate(samples[cls]):
-            write(str(output_folder) + "/" + str(cls) + '-' + str(i), int(samplerate/downsample), sample)
+            write(str(output_folder) + "/" + str(cls) + '-' + str(i) + ".wav", dsr, sample)
 
 def generate_features(samples):
     features = {}
     for cls in samples:
         features[cls] = []
         for sample in samples[cls]:
-            feature = fft.fft(sample[:,0], n=features_per_sample)
-            features[cls].append(feature)
+            mfcc_l = librosa.feature.mfcc(sample[:,0], sr=dsr)
+            mfcc_r = librosa.feature.mfcc(sample[:,1], sr=dsr)
+            features[cls].append(mfcc_l[0] + mfcc_r[0])
     return features
 
-def samples_to_dataframe(samples):
+def features_to_dataframe(features):
     Xy = []
     for label in samples:
-        for sample in samples[label]:
+        for feature in features[label]:
             row = [classes.index(label)]
             column_names = ["label"]
-            for idx,line in enumerate(sample):
-                column_names.append('fftr-' + str(idx))
-                row.append(np.real(line))
-                column_names.append('ffti-' + str(idx))
-                row.append(np.imag(line))
+            for idx,line in enumerate(feature):
+                column_names.append('mfcc_l-' + str(idx))
+                row.append(line)
+                column_names.append('mfcc_r-' + str(idx))
+                row.append(line)
             Xy.append(row)
     return pd.DataFrame(Xy, columns=column_names)
 
@@ -162,10 +166,10 @@ if not samples_available:
     rec = record_samples()
     samples = save_samples(rec)
 
-save_samples_as_wav(samples)
-'''
+#save_samples_as_wav(samples)
 features = generate_features(samples)
-df = samples_to_dataframe(features)
+
+df = features_to_dataframe(features)
 print(df)
 
 # Define our features X as all columns of Xy excluding the label column.
@@ -174,22 +178,25 @@ X = df.drop(['label'], axis='columns')
 y = df.label
 
 # Normalize X
-#X = preprocessing.normalize(X, norm='l2')
+X = preprocessing.normalize(X, norm='l2')
 
 # Split X and y into training and testing data each.
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+#X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
 # Prepare the classifier.
 model = MLPClassifier(solver='lbfgs', max_iter=10000)
 
 # Train the classifier (might take some minutes).
 print("Start training...")
-model.fit(X_train, y_train)
+#model.fit(X_train, y_train)
 
 # Predict values with the trained model.
-y_pred = model.predict(X_test)
+#y_pred = model.predict(X_test)
+
+scores = cross_val_score(model, X, y, cv=5)
+print("Scores: ")
+print(scores)
 
 # Evaluate the prediction performance using the accuracy metric and print the result.
-score = accuracy(y_test, y_pred)
-print("Accuracy: " + str(score))
-'''
+#score = accuracy(y_test, y_pred)
+print("Accuracy: " + str(scores.mean()))
