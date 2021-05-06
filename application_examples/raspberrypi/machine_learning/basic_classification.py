@@ -272,3 +272,4 @@ y_pred = model.predict(X_test)
 
 # Evaluate the prediction performance using the accuracy metric and print the result.
 score = accuracy(y_test, y_pred)
+print("Accuracy: " + str(score))
