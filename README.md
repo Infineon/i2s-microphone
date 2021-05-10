@@ -9,6 +9,9 @@ Please refer to [this page](https://www.infineon.com/cms/en/product/promopages/h
 ## Documentation
 This repository contains getting started guides and documentation which should help you to work with the Infineon microphone and the Raspberry Pi board we sent to you. You can skip the readme below and directly navigate to our Raspberry Pi I2S [getting started guide](https://github.com/Infineon/i2s-microphone/wiki/Raspberry-Pi-Getting-Started).
 
+## Support
+https://community.industrymeetsmakers.com/channel/Infineon_Sound
+
 # I2S Microphone
 A collection of documentation and examples for Infineon's I2S microphones.
 
