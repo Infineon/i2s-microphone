@@ -2,7 +2,7 @@
 Welcome to the [Infineon Hackathon](https://www.infineon.com/cms/en/product/promopages/hackathon/2021-eit/) [Sound Track](https://www.infineon.com/cms/en/product/promopages/hackathon/2021-eit/#sound)!
 
 ## Track
-The sound track is a very open track and has no specific challenge. The general idea is to use a Raspberry Pi with our [IM69D130 stereo microphone Shield2Go](https://www.infineon.com/cms/en/product/evaluation-boards/s2go-memsmic-im69d/) to come up with audio Machine Learning application ideas and implement them. For this, two example environments are given: Python and Edge Impulse. You can of course also use another language or framework of your choice, but for these two we provide examples.
+The sound track is an open track and has no specific challenge. The general idea is to use a Raspberry Pi with our [IM69D130 stereo microphone Shield2Go](https://www.infineon.com/cms/en/product/evaluation-boards/s2go-memsmic-im69d/) to come up with audio Machine Learning application ideas and implement them. For this, two example environments are given: Python and Edge Impulse. You can of course also use another language or framework of your choice, but for these two we provide examples.
 
 Please refer to [this page](https://www.infineon.com/cms/en/product/promopages/hackathon/2021-eit/#overview) for further details on the Hackathon and judging criterias.
 
