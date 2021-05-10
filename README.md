@@ -20,8 +20,8 @@ A collection of documentation and examples for Infineon's I2S microphones.
         <td><img src="https://github.com/infineon/multi-half-bridge/wiki/img/rpi-logo.png" width=200></td>
     </tr>
     <tr>
-        <td style="text-align: center"><a href="https://github.com/Infineon/multi-half-bridge/wiki/Arduino-Getting-Started">Arduino Getting Started</a></td>
-        <td style="text-align: center"><a href="https://github.com/Infineon/multi-half-bridge/wiki/Raspberry-Pi-Getting-Started">Raspberry Pi Getting Started</a></td>
+        <td style="text-align: center"><a href="https://github.com/Infineon/i2s-microphone/wiki/Arduino-Getting-Started">Arduino Getting Started</a></td>
+        <td style="text-align: center"><a href="https://github.com/Infineon/i2s-microphone/wiki/Raspberry-Pi-Getting-Started">Raspberry Pi Getting Started</a></td>
     </tr>
 </table>
 
