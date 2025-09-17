@@ -1,11 +1,14 @@
 # I2S Microphone
+
+[![Check links](https://github.com/Infineon/i2s-microphone/actions/workflows/check_links.yml/badge.svg)](https://github.com/Infineon/i2s-microphone/actions/workflows/check_links.yml)
+
 A collection of documentation and examples for Infineon's I2S microphones.
 
 ## Supported Products
 
 <table>
     <tr>
-        <td><img src="https://www.infineon.com/export/sites/default/media/products/Small_Signal_Discretes/S2GO_MEMSMIC_IM69D_Top_front_view.jpg_1540779246.jpg" width=200></td>
+        <td><img src="/doc/img/S2GO_MEMSMIC_IM69D.png" width=200></td>
     </tr>
     <tr>
         <td style="text-align: center"><a href="https://github.com/Infineon/i2s-microphone/wiki/Home">IM69D130 stereo microphone Shield2Go</a></td>
