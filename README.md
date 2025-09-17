@@ -1,6 +1,7 @@
-[![Check links](https://github.com/Infineon/XMC-for-Arduino/actions/workflows/check_links.yml/badge.svg)](https://github.com/Infineon/XMC-for-Arduino/actions/workflows/check_links.yml)
-
 # I2S Microphone
+
+[![Check links](https://github.com/Infineon/i2s-microphone/actions/workflows/check_links.yml/badge.svg)](https://github.com/Infineon/i2s-microphone/actions/workflows/check_links.yml)
+
 A collection of documentation and examples for Infineon's I2S microphones.
 
 ## Supported Products
